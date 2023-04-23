@@ -14,6 +14,7 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:maya_app/friends.dart';
+
 class MyDash extends StatelessWidget {
   const MyDash({super.key});
 
@@ -143,8 +144,8 @@ class ChatUser {
   ChatUser({required this.name, required this.messageText, required this.imageURL, required this.time});
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class ChatsScreen extends StatelessWidget {
+  const ChatsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -398,7 +399,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     _loadName();
     _loadImage();
-    // _saveFriends();
+    // _saveMessages();
   }
 
   Future<void> _loadName() async {
@@ -750,7 +751,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const HomeScreen(),
+    const ChatsScreen(),
     // const SearchScreen(),
     const FriendsScreen(),
     const ProfileScreen(),

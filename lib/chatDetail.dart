@@ -1,15 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:maya_app/chatMessageModel.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 class ChatDetailPage extends StatefulWidget {
   const ChatDetailPage({Key? key}) : super(key: key);
 
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
+
 }
 
+
+
+
+
 class _ChatDetailPageState extends State<ChatDetailPage> {
-  List messages = [    ChatMessage(messageContent: "Hello, Marvin", messageType: "receiver"),    ChatMessage(messageContent: "How have you been?", messageType: "receiver"),    ChatMessage(messageContent: "Hey John, I am doing fine dude. wbu?", messageType: "sender"),    ChatMessage(messageContent: "ehhhh, doing OK.", messageType: "receiver"),    ChatMessage(messageContent: "Is there any thing wrong?", messageType: "sender"),  ];
+  List<ChatMessage> messages = [];
+
+  Future<List<ChatMessage>> _getChatMessages() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final DatabaseReference database = FirebaseDatabase.instance
+        .ref()
+        .child('users')
+        .child(user!.email!.replaceAll('.', ','))
+        .child('messages');
+
+    final DatabaseEvent event = await database.once();
+    final DataSnapshot snapshot = event.snapshot;
+    final chatMessages = <ChatMessage>[];
+    final Map<dynamic, dynamic>? values = snapshot.value as Map?;
+    if (values != null) {
+      values.forEach((key, value) {
+        final message = ChatMessage(
+          messageContent: value['content'] ?? '',
+          messageType: value['type'] ?? '',
+        );
+        chatMessages.add(message);
+      });
+    }
+    return chatMessages;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getChatMessages().then((messages) {
+      setState(() {
+        this.messages = messages;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
