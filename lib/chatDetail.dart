@@ -18,6 +18,61 @@ class ChatDetailPage extends StatefulWidget {
 
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
+
+
+
+
+  // Future<void> _saveChatMessages() async {
+  //   List<ChatMessage> messages = [
+  //     ChatMessage(
+  //       messageContent: "Hello, Marvin",
+  //       messageType: "receiver",
+  //       timeStamp: DateTime.parse('2022-09-23 09:30:00').toIso8601String(),
+  //     ),
+  //     ChatMessage(
+  //       messageContent: "How have you been?",
+  //       messageType: "receiver",
+  //       timeStamp: DateTime.parse('2022-08-23 09:31:00').toIso8601String(),
+  //     ),
+  //     ChatMessage(
+  //       messageContent: "Hey John, I am doing fine dude. wbu?",
+  //       messageType: "sender",
+  //       timeStamp: DateTime.parse('2022-07-23 09:32:00').toIso8601String(),
+  //     ),
+  //     ChatMessage(
+  //       messageContent: "eh-hhh, doing OK.",
+  //       messageType: "receiver",
+  //       timeStamp: DateTime.parse('2022-06-23 09:33:00').toIso8601String(),
+  //     ),
+  //     ChatMessage(
+  //       messageContent: "Is there anything wrong?",
+  //       messageType: "sender",
+  //       timeStamp: DateTime.parse('2022-05-23 09:34:00').toIso8601String(),
+  //     ),
+  //   ];
+  //
+  //   final User? user = FirebaseAuth.instance.currentUser;
+  //   final DatabaseReference database = FirebaseDatabase.instance
+  //       .ref()
+  //       .child('users')
+  //       .child(user!.email!.replaceAll('.', ','))
+  //       .child('messages');
+  //
+  //   for (var message in messages) {
+  //     await database.push().set({
+  //       'content': message.messageContent,
+  //       'type': message.messageType,
+  //       'timestamp': DateTime.now().millisecondsSinceEpoch,
+  //     });
+  //   }
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _saveChatMessages();
+  // }
+
   List<ChatMessage> messages = [];
 
   Future<List<ChatMessage>> _getChatMessages() async {
@@ -37,12 +92,21 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         final message = ChatMessage(
           messageContent: value['content'] ?? '',
           messageType: value['type'] ?? '',
+          timeStamp: value['timestamp'].toString() ?? '', // Use 'timestamp' instead of 'timeStamp'
         );
         chatMessages.add(message);
       });
     }
+
+    // Sort the messages by their time stamp in ascending order
+    chatMessages.sort((a, b) => int.parse(a.timeStamp).compareTo(int.parse(b.timeStamp)));
+
     return chatMessages;
   }
+
+
+
+
 
   @override
   void initState() {
@@ -52,6 +116,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         this.messages = messages;
       });
     });
+    // _saveChatMessages();
   }
 
   @override
