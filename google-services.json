@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "346376805003",
+    "project_id": "flutter1-59d79",
+    "storage_bucket": "flutter1-59d79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346376805003:android:c128d20413373721e6528e",
+        "android_client_info": {
+          "package_name": "com.example.maya_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346376805003-8ojo2fam3hrh5rus7aa4nh94vb83003i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyl6Rh-xHmCjTPG9aDtCjwe2rjV3tRkP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346376805003-8ojo2fam3hrh5rus7aa4nh94vb83003i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
